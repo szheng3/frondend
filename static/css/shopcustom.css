@@ -1,0 +1,11 @@
+.user-profile img {
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    margin-right: 10px;
+    color: white;
+}
+
+nav > ul > li > a {
+    color: white;
+}

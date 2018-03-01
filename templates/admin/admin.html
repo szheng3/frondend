@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+</head>
+<body>
+<div class="right_col" role="main" data-layout-fragment="content">
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>My Notes </h3>
+        </div>
+
+
+    </div>
+
+    <div class="row" th:each="PassgpaUniversityEntity: ${PassgpaUniversityEntitys}">
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+
+                <div class="x_title">
+                    <h2 th:text="${PassgpaUniversityEntity.universityname}">My Notes</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <div class="x_content">
+                        <!--<p>this is something uni</p>-->
+
+                        <!--todo view and update-->
+
+                        <!-- start accordion -->
+                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel"
+                                 th:each="passgpaClassUserEntity: ${PassgpaUniversityEntity.passgpaClassUserEntities}">
+                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
+                                   data-parent="#accordion" href="#collapseOne"
+                                   th:href="'#'+${PassgpaUniversityEntity.iduni}+'-'+${passgpaClassUserEntity.idClassUserTable}"
+                                   aria-expanded="true"
+                                   aria-controls="collapseOne">
+                                    <h4 class="panel-title">[[${passgpaClassUserEntity.ClassnameName}]]
+                                        <small class="right">$ [[${passgpaClassUserEntity.price}]]</small>
+                                        <span class="right"> <small>（[[${passgpaClassUserEntity.DateName}]]） </small>[[${passgpaClassUserEntity.ProfessorName}]] </span>
+                                    </h4>
+                                </a>
+                                <div id="collapseOne"
+                                     th:id="${PassgpaUniversityEntity.iduni}+'-'+${passgpaClassUserEntity.idClassUserTable}"
+                                     class="panel-collapse collapse in" role="tabpanel"
+                                     aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <a href="#"
+                                           th:href="@{/admin/updatenote(idClass=${passgpaClassUserEntity.idClassUserTable})}"
+                                           class="btn btn-primary btn-xs"><i
+                                                class="fa fa-folder"></i> Update Class </a>
+
+                                        <a href="#"
+                                           th:href="@{/admin/deletenote(idClassUserTable=${passgpaClassUserEntity.idClassUserTable})}"
+                                           class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete
+                                            Class </a>
+
+
+                                        <table class="table table-striped projects">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 1%">#</th>
+                                                <th style="width: 20%">Document Name</th>
+                                                <th>Status</th>
+                                                <th>View</th>
+                                                <th style="width: 20%">Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="passgpaClassNoteEntitys: ${passgpaClassUserEntity.passgpaClassNoteEntities}">
+                                                <td>#</td>
+                                                <td>
+                                                    <a th:text="${passgpaClassNoteEntitys.noteName}">Pesamakini Backend
+                                                        UI</a>
+                                                    <!--<br>-->
+                                                    <!--<small>Created 01.01.2015</small>-->
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-xs">Success
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <a href="/vendors/pdf/web/viewer.html?file=/Midterm_Solutions_2014.pdf"
+                                                       th:href="'/vendors/pdf/web/viewer.html?file='+${passgpaClassNoteEntitys.notePath}"
+                                                       class="btn btn-primary btn-xs"><i
+                                                            class="fa fa-folder"></i> View </a>
+                                                </td>
+                                                <td>
+                                                    <a href="#"
+                                                       th:href="@{/admin/deleteDocument(idNoteTable=${passgpaClassNoteEntitys.idNoteTable})}"
+                                                       class="btn btn-danger btn-xs"><i
+                                                            class="fa fa-trash-o"></i> Delete </a>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <br>
+                        <!-- end of accordion -->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>
+

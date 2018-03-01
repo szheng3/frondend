@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>PassGPA</title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css"/>
+
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <!-- page content -->
+        <div class="col-md-12">
+            <div class="col-middle">
+                <div class="text-center">
+                    <h1 class="error-number">404</h1>
+                    <h2>Sorry but we couldn't find this page</h2>
+                    <p>This page you are looking for does not exist</p>
+                    <div class="mid_center">
+                        <h3>Search</h3>
+
+                        <div class="ui category search">
+                            <div class="ui icon input">
+                                <input class="prompt" type="text" placeholder="Search...">
+                                <i class="search icon"></i>
+                            </div>
+                            <div class="results"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="/semantic/dist/semantic.min.js"></script>
+
+<!-- FastClick -->
+<script src="/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<!--<script src="/vendors/nprogress/nprogress.js"></script>-->
+
+<!-- Custom Theme Scripts -->
+<script src="/build/js/custom.min.js"></script>
+
+
+<script>
+    //    $('.ui.search')
+    //        .search({
+    //            type: 'category',
+    //            minCharacters: 2,
+    //            apiSettings: {
+    //                onResponse: function (githubResponse) {
+    //                    var
+    //                        response = {
+    //                            results: {}
+    //                        }
+    //                    ;
+    //                    // translate GitHub API response to work with search
+    //                    $.each(githubResponse.items, function (index, item) {
+    //                        var
+    //                            language = item.universityName || 'Unknown',
+    //                            maxResults = 10
+    //                        ;
+    //                        if (index >= maxResults) {
+    //                            return false;
+    //                        }
+    //
+    //                        if (item.className === null && item.universityName === null && item.professorName === null) {
+    //                            return false;
+    //                        }
+    //                        console.log(githubResponse.items);
+    //                        console.log(index);
+    //                        // create new language category
+    //                        if (response.results[language] === undefined) {
+    //                            response.results[language] = {
+    //                                name: language,
+    //                                results: []
+    //                            };
+    //                        }
+    //                        // add result to category
+    //                        response.results[language].results.push({
+    //                            title: item.className,
+    //                            description: item.universityName,
+    //                            url: "/search/class/" + item.className
+    //                        });
+    //                    });
+    //                    return response;
+    //                },
+    //                url: '/search/{query}'
+    //            }
+    //        })
+
+    $('.ui.search')
+        .search({
+            apiSettings: {
+                url: '/search/{query}'
+            },
+            fields: {
+                results: 'items',
+                title: 'className',
+                description: 'universityName',
+                url: 'classurl'
+            },
+            minCharacters: 2
+        })
+    ;
+
+</script>
+
+</body>
+</html>

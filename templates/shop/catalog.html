@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      data-layout-decorate="~{shopfragments/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="Sell your study resources to make easily student money. Instant access to millions of Study Resources. Improve your scores.">
+    <title>Class</title>
+</head>
+<body>
+
+
+<!-- content -->
+<div class="container" data-layout-fragment="content">
+    <div class="women_main">
+        <!-- start content -->
+        <div class="row single">
+            <div class="col-md-9 det">
+                <div class="single_left">
+                    <div class="grid images_3_of_2">
+                        <ul id="etalage"></ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+                <!--<div class="single-bottom1">-->
+                <!--<h6>Details</h6>-->
+                <!--<p class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option</p>-->
+                <!--</div>-->
+                <div class="single-bottom2">
+                    <h6>Related Products</h6>
+
+
+                    <div class="product" th:each="PassgpaUniversityEntity: ${items}">
+                        <div class="product-desc">
+                            <div class="product-img">
+                                <img src="/images/w8.jpg" th:src="@{${PassgpaUniversityEntity.imagePath}}"
+                                     class="img-responsive " alt=""/>
+                            </div>
+                            <div class="prod1-desc">
+                                <h5><a class="product_link" th:text="${PassgpaUniversityEntity.classnameName}"
+                                       th:href="@{'/class/details/'+${PassgpaUniversityEntity.idClassUserTable}}">Excepteur
+                                    sint</a><span th:text="'    '+${PassgpaUniversityEntity.user.username}"></span></h5>
+                                <p class="product_descr" style="
+display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+
+" th:text="${PassgpaUniversityEntity.details}">
+                                    Vivamus ante lorem, eleifend nec interdum non, ullamcorper et
+                                    arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+                                    inceptos himenaeos.
+                                </p>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="product_price">
+                            <span class="price-access" th:text="'$' + ${PassgpaUniversityEntity.price}">$597.51</span>
+
+                            <div class="clearfix"></div>
+
+                            <a href="/admin/postcheckout" th:if="${PassgpaUniversityEntity.isown.name()=='OTHERS'}"
+                               th:href="@{/admin/postcheckout(idClass=${PassgpaUniversityEntity.idClassUserTable})}"
+                            >
+                                <button class="button1"><span>Add to cart</span></button>
+                            </a>
+
+
+                            <a href="/admin/postcheckout" th:if="${PassgpaUniversityEntity.isown.name()=='OWN'}"
+                               th:href="@{'/class/details/'+${PassgpaUniversityEntity.idClassUserTable}}"
+                            >
+                                <button class="button1"><span>View </span></button>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <style>
+
+
+                    </style>
+
+                    <div class="product" style="    text-align: center;">
+
+                        <ul class="pagination pagination-split" th:if="${pager.endPage > 1}" style="margin: auto;">
+                            <li th:class=" ${number== 0} ? disabled
+                                ">
+                                <a class="pageLink" th:href="@{/catalogue(pageSize=${selectedPageSize}, page=1)}"
+                                   style="color: #ff6978;">&laquo;</a>
+                            </li>
+                            <li th:class="${number == 0} ? disabled">
+                                <a class="pageLink"
+                                   th:href="@{/catalogue(pageSize=${selectedPageSize}, page=${number})}"
+                                   style="color: #ff6978;">&larr;</a>
+                            </li>
+                            <li th:class="${number == (page - 1)} ? 'active pointer-disabled'"
+                                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                                <!--<a class="pageLink" th:href="@{/catalogue(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>-->
+                                <a th:class="${number == (page - 1)} ? 'current':'pageLink'"
+                                   th:href="@{/catalogue(pageSize=${selectedPageSize}, page=${page})}"
+                                   th:text="${page}" style="color: #ff6978;"></a>
+
+                            </li>
+                            <li th:class="${(number + 1) == totalPages} ? disabled">
+                                <a class="pageLink"
+                                   th:href="@{/catalogue(pageSize=${selectedPageSize}, page=${(number + 1) == totalPages} ? ${totalPages}:${number + 2})}"
+                                   style="color: #ff6978;">&rarr;</a>
+                            </li>
+                            <li th:class="${(number + 1) == totalPages} ? disabled">
+                                <a class="pageLink"
+                                   th:href="@{/catalogue(pageSize=${selectedPageSize}, page=${totalPages})}"
+                                   style="color: #ff6978;">&raquo;</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div data-th-replace="shopfragments/fragment-rank-option :: rank-option"></div>
+
+            <div class="clearfix"></div>
+        </div>
+        <!-- end content -->
+    </div>
+</div>
+
+</body>
+</html>

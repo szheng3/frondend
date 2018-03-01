@@ -1,0 +1,12 @@
+<div class="profile" data-th-fragment="menu-profile-quick-info" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="profile_pic">
+        <img th:src="@{${#session.getAttribute('URLIMAGE')}}" alt="..." class="img-circle profile_img"
+             style="width: 56px; height: 56px">
+    </div>
+    <div class="profile_info">
+        <span>Welcome</span>
+        <h2>
+            [[${#session.getAttribute('user').username}]]
+        </h2>
+    </div>
+</div>

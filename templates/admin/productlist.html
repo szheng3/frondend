@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Notes</title>
+    <style>
+        .thumbnail {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .thumbnail img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 100%;
+            width: auto;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .thumbnail img.portrait {
+            width: 100%;
+            height: auto;
+        }
+
+        .image-cropper {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        img {
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
+        }
+
+        .panel_toolbox>li>a {
+            padding: 5px;
+            color: #ffffff;
+            font-size: 12px;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+<div class="right_col" role="main" data-layout-fragment="content">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>商品列表</h3>
+
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+
+                    <div class="x_title">
+                        <h2>
+                            商品总数：[[${lexingoods.totalElements}]]
+
+                            <!--<small>different form elements</small>-->
+                        </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+
+                            <li>
+                                <a  th:href="@{/admin/addItem}" class="btn btn-round btn-info" style="{color: #ffffff}">增加新商品</a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+
+
+
+
+
+                                <ul class="pagination pagination-split" th:if="${pager.endPage > 1}">
+                                    <li th:class=" ${number== 0} ? disabled
+                                ">
+                                        <a class="pageLink" th:href="@{/admin(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                                    </li>
+                                    <li th:class="${number == 0} ? disabled">
+                                        <a class="pageLink"
+                                           th:href="@{/admin(pageSize=${selectedPageSize}, page=${number})}">&larr;</a>
+                                    </li>
+                                    <li th:class="${number == (page - 1)} ? 'active pointer-disabled'"
+                                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                                        <!--<a class="pageLink" th:href="@{/admin(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>-->
+                                        <a th:class="${number == (page - 1)} ? 'current':'pageLink'"
+                                           th:href="@{/admin(pageSize=${selectedPageSize}, page=${page})}"
+                                           th:text="${page}"></a>
+
+                                    </li>
+                                    <li th:class="${(number + 1) == totalPages} ? disabled">
+                                        <a class="pageLink"
+                                           th:href="@{/admin(pageSize=${selectedPageSize}, page=${(number + 1) == totalPages} ? ${totalPages}:${number + 2})}">&rarr;</a>
+                                    </li>
+                                    <li th:class="${(number + 1) == totalPages} ? disabled">
+                                        <a class="pageLink"
+                                           th:href="@{/admin(pageSize=${selectedPageSize}, page=${totalPages})}">&raquo;</a>
+                                    </li>
+                                </ul>
+
+                                <!--<ul class="pagination pagination-split">-->
+                                <!--<li><a href="#">A</a></li>-->
+                                <!--<li><a href="#">B</a></li>-->
+                                <!--<li><a href="#">C</a></li>-->
+                                <!--<li><a href="#">D</a></li>-->
+                                <!--<li><a href="#">E</a></li>-->
+                                <!--<li>...</li>-->
+                                <!--<li><a href="#">W</a></li>-->
+                                <!--<li><a href="#">X</a></li>-->
+                                <!--<li><a href="#">Y</a></li>-->
+                                <!--<li><a href="#">Z</a></li>-->
+                                <!--</ul>-->
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <!--<div sec:authorize="hasAuthority('USER')"> Has Authority USER</div>-->
+
+                            <!--<div sec:authorize="hasAuthority('ADMIN')"> Has Authority ADMIN</div>-->
+
+
+                            <div class="col-md-4 col-sm-4 col-xs-12 profile_details" th:each="lexingood: ${lexingoods}">
+                                <div class="well profile_view">
+                                    <div class="col-sm-12">
+                                        <h4 class="brief">品牌: [[${lexingood.bandName}]]</h4>
+                                        <div class="left col-xs-7">
+
+
+                                            <h2>商铺: [[${lexingood.sellerName}]] </h2>
+                                            <p>商品名称: [[${lexingood.goodsName}]] </p>
+                                            <p>商品分类: [[${lexingood.nameCatagory}]] </p>
+
+                                            <ul class="list-unstyled">
+                                                <li> 人民币价格: [[${lexingood.marketPrice}]]</li>
+                                                <li> 悦米价格: [[${lexingood.shopPrice}]]</li>
+                                            </ul>
+                                        </div>
+                                        <div class="right col-xs-5 text-center ">
+                                            <img th:src="@{${lexingood.smLogo}}" alt=""
+                                                 class="img-circle img-responsive ">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 bottom text-center">
+                                        <div class="col-xs-12 col-sm-6 emphasis">
+                                            <p class="ratings">
+                                                <a>审核状态: [[${lexingood.condDition}]]</a>
+
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 emphasis ">
+                                            <a onClick="getGoods(this.id);" th:id="${lexingood.id}">
+                                                <button type="button" class="btn btn-primary btn-xs">
+                                                    <i class="fa fa-user"> </i> 修改商品
+                                                </button>
+                                            </a>
+
+                                            <a th:href="@{/admin/delete(id=${lexingood.id})}">
+                                                <button type="button"
+                                                        class="btn btn-danger btn-xs"><i class="fa fa-trash-o">
+                                                </i> 删除
+                                                </button>
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+
+
+<div class="ui  modal">
+    <i class="close icon"></i>
+    <div class="header">
+        商品详情:
+        <input id="itemid" hidden>
+    </div>
+    <div class="image content one column stackable center aligned page grid">
+        <div class="ui medium image  ">
+            <img id="productimage" src="/images/avatar/large/chris.jpg" style="padding-right: 20px;">
+        </div>
+
+
+        <div class="ui form ">
+            <div class="fields">
+                <div class="sixteen wide field">
+                    <label>商品名称:</label>
+                    <input id="goodsName" type="text" placeholder="商品名称">
+                </div>
+
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>人民币价格:</label>
+                    <input id="marketPrice" type="text" placeholder="人民币价格">
+                </div>
+                <div class="field">
+                    <label>悦米价格:</label>
+                    <input id="shopPrice" type="text" placeholder="悦米价格">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="eight wide field">
+                    <label>物品分类:</label>
+                    <select id="nameCatagory" class="ui dropdown">
+                        <option value="0">选项</option>
+
+                        <option value="1" th:each="PassgpaUniversityEntity: ${PassgpaUniversityEntitys}"
+                                th:value="${PassgpaUniversityEntity.id}" th:text="${lexinCategoryEntity.catName}">
+                            鞋，箱包，配件配饰
+                        </option>
+
+
+                    </select>
+                </div>
+                <div class="eight wide field">
+                    <label>审核通过:</label>
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" id="checkbox" checked="checked">
+                        <label class="horizontal"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="actions">
+        <div class="ui grey deny button">
+            取消
+        </div>
+        <a onClick="postGood();">
+            <div class="ui positive right labeled icon button">
+                更新信息
+                <i class="checkmark icon"></i>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+<script>
+
+    function getGoods(id) {
+
+        $.get("/goods/" + id, function (data) {
+            var markers = JSON.stringify(data);
+            $("#productimage").attr('src', data.smLogo);
+
+            if (data.isCheck == 1) {
+                $('#checkbox').attr('checked', true);
+            } else {
+                $('#checkbox').attr('checked', false);
+            }
+
+            $('#itemid').val(id);
+            $('#goodsName').val(data.goodsName);
+            $('#marketPrice').val(data.marketPrice);
+            $('#shopPrice').val(data.shopPrice);
+            $('#condDition').val(data.condDition);
+            $('#nameCatagory').val(data.catId);
+            $('.ui.modal')
+                .modal({
+                    inverted: true
+                })
+                .modal('show')
+                .modal('refresh')
+            ;
+
+        });
+
+    }
+
+    function postGood() {
+        //checkbox
+        var ischeck = 2;
+        if ($("#checkbox").is(":checked")) {
+            // checkbox is checked
+            ischeck = 1;
+
+        } else {
+            // checkbox is not checked
+            ischeck = 2;
+        }
+
+        $.post("/goods/update/" + $('#itemid').val(), {
+
+            goodsName: $('#goodsName').val(),
+            marketPrice: $('#marketPrice').val(),
+            shopPrice: $('#shopPrice').val(),
+            catId: $('#nameCatagory').val(),
+            isCheck: ischeck
+
+
+        }, function (result) {
+
+            location.reload();
+
+        });
+
+    }
+
+
+</script>

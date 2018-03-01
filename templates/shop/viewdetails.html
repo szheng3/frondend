@@ -1,0 +1,190 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      data-layout-decorate="~{shopfragments/layout}">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="description" th:attr="content=${notes.getDetails()}"
+          content="Sell your notes to make easily students money.">
+
+
+    <title th:text="${notes.getPassgpaClassByIdClassname().getClassName()}">checkout</title>
+    <!--<link rel="stylesheet" href="/css/etalage.css">-->
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<div class="container" data-layout-fragment="content">
+    <div class="women_main">
+        <!-- start content -->
+        <div class="row single">
+            <div class="col-md-9 det">
+                <div class="single_left">
+                    <div class="grid images_3_of_2">
+                        <ul id="etalage">
+                            <li>
+                                <a href="optionallink.html">
+                                    <img class="etalage_thumb_image img-responsive" src="/images/d1.jpg"
+                                         th:src="${notes.getImagePath()}"/>
+                                </a>
+                            </li>
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="desc1 span_3_of_2">
+                        <h3 th:text="${notes.getPassgpaClassByIdClassname().getClassName()}">soluta nobis eleifend
+                            option</h3>
+                        <span class="brand"
+                              th:text="'Professor: '+${notes.getPassgpaProfessorByIdProfessor().getProfessorName()}"></span>
+                        <br>
+                        <span class="code" th:text="'Date:'+ ${notes.getPassgpaDateByIdDate().getDate()}"></span>
+                        <p th:text="'Major: '+${notes.getPassgpaMajorByIdMajor().getMajorName()}">when an unknown
+                            printer took a galley of type and
+                            scrambled it to make</p>
+
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="single-bottom1">
+                    <h6>Details</h6>
+                    <p class="prod-desc" th:text="${notes.details}">Lorem ipsum dolor sit amet, consectetuer adipiscing
+                        elit, sed diam nonummy nibh
+                        euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
+                        quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+                        consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+                        consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
+                        dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla
+                        facilisi. Nam liber tempor cum soluta nobis eleifend option</p>
+                </div>
+                <div class="single-bottom2">
+
+
+                    <!--todo add the list pdf-->
+
+                    <table class="table table-striped projects">
+                        <thead>
+                        <tr>
+                            <th style="width: 1%">#</th>
+                            <th style="width: 20%">Document Name</th>
+                            <th>View</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="passgpaClassNoteEntitys: ${notes.getPassgpaClassNoteEntitiesByIdClassUserTable()}">
+                            <td>#</td>
+                            <td>
+                                <a th:text="${passgpaClassNoteEntitys.getNoteName()}">Pesamakini Backend
+                                    UI</a>
+                                <!--<br>-->
+                                <!--<small>Created 01.01.2015</small>-->
+                            </td>
+
+                            <td>
+                                <a href="/vendors/pdf/web/viewer.html?file=/Midterm_Solutions_2014.pdf"
+                                   th:href="'/vendors/pdf/web/viewer.html?file='+${passgpaClassNoteEntitys.getNotePath()}"
+                                   class="btn btn-primary btn-xs"><i
+                                        class="fa fa-folder"></i> View </a>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+            <div data-th-replace="shopfragments/fragment-rank-option :: rank-option"></div>
+
+            <div class="clearfix"></div>
+        </div>
+        <!-- end content -->
+    </div>
+
+    <!--<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>-->
+
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $('#etalage').etalage({
+                thumb_image_width: 300,
+                thumb_image_height: 400,
+                source_image_width: 900,
+                source_image_height: 1200,
+                show_hint: true,
+                click_callback: function (image_anchor, instance_id) {
+                    alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+                }
+            });
+
+        });
+    </script>
+
+</div>
+
+</body>
+</html>
+
+
+<script src="/vendors/pnotify/dist/pnotify.js"></script>
+<script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>
+<script src="/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+
+<script>
+    function buy(id) {
+
+        var formData = new FormData();
+
+
+        formData.append("idclass", id);
+
+
+        $.ajax({
+            url: '/admin/singleorder',
+            data: formData,
+            type: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+
+            success: function (msg) {
+                console.log(msg);
+
+                if (msg.info === '1') {
+
+                    window.location.href = msg.redirect;
+
+                } else if (msg.info === '0') {
+
+                    new PNotify({
+                        title: 'Sorry!',
+                        text: 'You do not have enough money.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    })
+
+                } else {
+
+                    $("html").html(msg);
+
+                }
+
+            },
+            error: function (msg) {
+                new PNotify({
+                    title: 'Oh No!',
+                    text: 'HTTP Request Failed',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+            }
+        });
+
+    }
+</script>

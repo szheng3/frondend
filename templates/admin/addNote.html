@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Notes</title>
+    <link rel="stylesheet" type="text/css"
+          href="/vendors/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="/vendors/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+
+</head>
+<body>
+<div class="right_col" role="main" data-layout-fragment="content" style="background: white">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Add Notes</h3>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Upload Class Image</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br>
+                        <div class="custom-file-container" data-upload-id="myUniqueUploadId">
+                            <label>Upload Image <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                                                   title="Clear Image"></a></label>
+
+                            <label class="custom-file-container__custom-file">
+                                <input type="file" class="custom-file-container__custom-file__custom-file-input"
+                                       accept="image/*" multiple>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            </label>
+                            <div class="custom-file-container__image-preview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Price</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label " for="price"> Price
+                                    <span class="required">*</span>
+                                </label>
+                                <div>
+                                    <input type="number" id="price" required="required"
+                                           class="form-control ">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Promotion<span
+                                        class="required">*</span></label>
+                                <div>
+                                    <div id="gender" class="btn-group" data-toggle="buttons"
+                                         onchange="toggle()">
+                                        <label class="btn btn-default active" data-toggle-class="btn-primary"
+                                               data-toggle-passive-class="btn-default">
+                                            <input type="radio" name="gender" value="NORMAL"> &nbsp; No &nbsp;
+                                        </label>
+                                        <label class="btn btn-primary" data-toggle-class="btn-primary"
+                                               data-toggle-passive-class="btn-default">
+                                            <input type="radio" name="gender" value="SALE">&nbsp; Yes &nbsp;
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+
+                                function toggle() {
+
+
+                                    if ($('#gender').children(".active").children("input").val() === 'NORMAL') {
+
+                                        $('#PromotionDate').attr("disabled", 'disabled');
+
+                                        $('#PromotionPrice').attr("disabled", 'disabled');
+
+
+                                    } else if ($('#gender').children(".active").children("input").val() === 'SALE') {
+
+                                        $('#PromotionDate').removeAttr("disabled");
+
+                                        $('#PromotionPrice').removeAttr("disabled");
+                                    }
+
+
+                                }
+
+                            </script>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Promotion Date <span
+                                        class="required"></span>
+                                </label>
+                                <div>
+                                    <input id="PromotionDate"
+                                           class="date-picker form-control "
+                                           required="required" type="text" disabled="disabled" value="123">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Promotion Price <span
+                                        class="required"></span>
+                                </label>
+                                <div>
+                                    <input id="PromotionPrice" class=" form-control "
+                                           required="required" type="text" disabled="disabled">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Fill class information
+
+                        </h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br>
+                        <form class="form-horizontal form-label-left">
+
+
+                            <div class="form-group">
+                                <label class="control-label " for="idUniversity">University<span
+                                        class="required">*</span>
+                                </label>
+                                <div id="adduniversitynames">
+                                    <select class="form-control" id="idUniversity" onchange="addUni()">
+                                        <!--<option>选择状态</option>-->
+                                        <option value="1"
+                                                th:each="passgpaUniversityEntity: ${passgpaUniversityEntitys}"
+                                                th:value="${passgpaUniversityEntity.iduni}"
+                                                th:text="${passgpaUniversityEntity.universityname}">鞋，箱包，配件配饰
+                                        </option>
+                                        <option value="-1">Others</option>
+
+                                    </select>
+
+
+                                </div>
+
+
+                                <div id="adduniversityname" hidden>
+
+                                    <input type="text" class="form-control "
+                                           id="universityname" onkeyup="adduniversityname()">
+                                </div>
+                                <script>
+
+                                    function addUni() {
+
+
+                                        var $idUniversity = $('#idUniversity');
+
+                                        if ($idUniversity.val() === "-1") {
+
+                                            hideUni();
+
+                                        } else {
+
+                                            jQuery.ajax({
+                                                url: "/getuniversity",
+                                                type: "GET",
+                                                data: {
+                                                    "idUni": $idUniversity.val(),
+                                                },
+                                                headers: {
+                                                    "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+                                                },
+                                            })
+                                                .done(function (data, textStatus, jqXHR) {
+                                                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                                                    var index;
+                                                    var optionHTML = '';
+                                                    console.log(data);
+
+
+                                                    major(data.PassgpaMajors);
+
+                                                    viewclass(data.PassgpaClasses);
+
+                                                    Profe(data.PassgpaProfessorEntityes)
+
+
+                                                })
+                                                .fail(function (jqXHR, textStatus, errorThrown) {
+
+                                                    new PNotify({
+                                                        title: 'Oh No!',
+                                                        text: 'Network Failed',
+                                                        type: 'error',
+                                                        styling: 'bootstrap3'
+                                                    })
+
+
+                                                })
+                                                .always(function () {
+                                                    /* ... */
+                                                });
+
+
+//                                            $('#idMajor').empty().append(optionHTML);
+
+
+                                            $('#universitynameinput').val($idUniversity.children(":selected").text());
+
+                                            $('#universitynametext').val($idUniversity.val());
+
+                                        }
+
+
+                                    }
+
+                                    function viewclass(PassgpaClasses) {
+
+                                        var index;
+                                        var optionHTML = '';
+
+                                        if (PassgpaClasses.length != 0) {
+
+                                            for (index = 0; index < PassgpaClasses.length; ++index) {
+
+                                                $('#classNameinput').val(PassgpaClasses[0].className);
+
+                                                $('#classNametext').val(PassgpaClasses[0].idClass);
+
+
+                                                optionHTML = optionHTML + "<option value='" + PassgpaClasses[index].idClass + "'>" + PassgpaClasses[index].className + "</option>";
+                                            }
+
+
+                                        }
+                                        optionHTML = optionHTML + "<option value=\"-1\">Others</option>";
+
+                                        $('#idclassname').empty().append(optionHTML);
+
+                                    }
+
+
+                                    function major(PassgpaMajors) {
+
+                                        var index;
+                                        var optionHTML = '';
+
+                                        if (PassgpaMajors.length != 0) {
+
+                                            for (index = 0; index < PassgpaMajors.length; ++index) {
+
+                                                $('#majorNameinput').val(PassgpaMajors[0].majorName);
+
+                                                $('#majorNametext').val(PassgpaMajors[0].idMajor);
+
+                                                optionHTML = optionHTML + "<option value='" + PassgpaMajors[index].idMajor + "'>" + PassgpaMajors[index].majorName + "</option>";
+                                            }
+
+
+                                        }
+                                        optionHTML = optionHTML + "<option value=\"-1\">Others</option>";
+
+                                        $('#idMajor').empty().append(optionHTML);
+
+                                    }
+
+
+                                    function Profe(PassgpaProfessorEntityes) {
+
+                                        var index;
+                                        var optionHTML = '';
+
+                                        if (PassgpaProfessorEntityes.length != 0) {
+
+                                            for (index = 0; index < PassgpaProfessorEntityes.length; ++index) {
+
+                                                $('#professorNameinput').val(PassgpaProfessorEntityes[0].professorName);
+
+                                                $('#professorNametext').val(PassgpaProfessorEntityes[0].idProfeesorTable);
+
+
+                                                optionHTML = optionHTML + "<option value='" + PassgpaProfessorEntityes[index].idProfeesorTable + "'>" + PassgpaProfessorEntityes[index].professorName + "</option>";
+                                            }
+
+
+                                        }
+                                        optionHTML = optionHTML + "<option value=\"-1\">Others</option>";
+
+                                        $('#idprofessor').empty().append(optionHTML);
+
+                                    }
+
+                                    function hideUni() {
+
+                                        $('#adduniversityname').show();
+
+                                        $('#adduniversitynames').hide();
+
+                                        $('#addmajornames').show();
+
+                                        $('#addmajorname').hide();
+
+                                        $('#addclassnames').show();
+
+                                        $('#addclassname').hide();
+
+                                        $('#addprofessorNames').show();
+
+                                        $('#addprofessorName').hide();
+
+
+                                        $('#universitynameinput').val("No Name Found");
+
+                                        $('#universitynametext').val(0);
+
+                                        $('#majorNameinput').val("No Name Found");
+
+                                        $('#majorNametext').val(0);
+
+                                        $('#classNameinput').val("No Name Found");
+
+                                        $('#classNametext').val(0);
+
+                                        $('#professorNameinput').val("No Name Found");
+
+                                        $('#professorNametext').val(0);
+                                    }
+
+                                    function adduniversityname() {
+
+                                        $('#universitynameinput').val($('#universityname').val());
+
+                                        $('#universitynametext').val(0);
+
+
+                                    }
+
+
+                                </script>
+
+                                <input th:if="${passgpaUniversityEntitys.size()!=0}" hidden
+                                       id="universitynameinput"
+                                       th:value="${passgpaUniversityEntitys[0].universityname}">
+
+                                <input th:if="${passgpaUniversityEntitys.size()!=0}" hidden
+                                       id="universitynametext"
+                                       th:value="${passgpaUniversityEntitys[0].iduni}">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label class="control-label ">Major<span
+                                        class="required">*</span>
+                                </label>
+                                <div id="addmajorname">
+                                    <select class="form-control" id="idMajor" onchange="majorselect()">
+                                        <!--<option>选择状态</option>-->
+
+
+                                        <option value="1"
+                                                th:each="PassgpaMajor: ${PassgpaMajors}"
+                                                th:value="${PassgpaMajor.idMajor}"
+                                                th:text="${PassgpaMajor.majorName}">鞋，箱包，配件配饰
+                                        </option>
+
+                                        <option value="-1">Others</option>
+
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div id="addmajornames" hidden>
+
+                                    <input type="text" class="form-control "
+                                           id="majorName" onkeyup="addmajor()">
+
+
+                                </div>
+
+                                <script>
+
+                                    function majorselect() {
+
+                                        var $idMajor = $('#idMajor');
+
+
+                                        if ($idMajor.val() === "-1") {
+
+
+                                            $('#addmajornames').show();
+
+                                            $('#addmajorname').hide();
+
+                                            $('#addclassnames').show();
+
+                                            $('#addclassname').hide();
+
+                                            $('#addprofessorNames').show();
+
+                                            $('#addprofessorName').hide();
+
+
+                                            $('#majorNameinput').val("No Name Found");
+
+                                            $('#majorNametext').val(0);
+
+                                            $('#classNameinput').val("No Name Found");
+
+                                            $('#classNametext').val(0);
+
+                                            $('#professorNameinput').val("No Name Found");
+
+                                            $('#professorNametext').val(0);
+
+
+                                        } else {
+
+                                            jQuery.ajax({
+                                                url: "/getmajor",
+                                                type: "GET",
+                                                data: {
+                                                    "idMajor": $idMajor.val(),
+                                                },
+                                                headers: {
+                                                    "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+                                                },
+                                            })
+                                                .done(function (data, textStatus, jqXHR) {
+                                                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                                                    var index;
+                                                    var optionHTML = '';
+                                                    console.log(data);
+
+
+//                                                    major(data.PassgpaMajors);
+
+                                                    viewclass(data.PassgpaClasses);
+
+                                                    Profe(data.PassgpaProfessorEntityes)
+
+
+                                                })
+                                                .fail(function (jqXHR, textStatus, errorThrown) {
+
+                                                    new PNotify({
+                                                        title: 'Oh No!',
+                                                        text: 'Network Failed',
+                                                        type: 'error',
+                                                        styling: 'bootstrap3'
+                                                    })
+
+
+                                                })
+                                                .always(function () {
+                                                    /* ... */
+                                                });
+
+                                            $('#majorNameinput').val($idMajor.children(":selected").text());
+
+                                            $('#majorNametext').val($idMajor.val());
+
+                                        }
+
+
+                                    }
+
+                                    function addmajor() {
+
+                                        $('#majorNameinput').val($('#majorName').val());
+
+                                        $('#majorNametext').val(0);
+
+
+                                    }
+
+
+                                </script>
+
+                                <input th:if="${PassgpaMajors.size()!=0}" hidden id="majorNameinput"
+                                       th:value="${PassgpaMajors[0].majorName}">
+
+                                <input th:if="${PassgpaMajors.size()!=0}" hidden id="majorNametext"
+                                       th:value="${PassgpaMajors[0].idMajor}">
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Class<span
+                                        class="required">*</span>
+                                </label>
+                                <div id="addclassname">
+                                    <select class="form-control" id="idclassname" onchange="classselect()">
+                                        <option value="1"
+                                                th:each="PassgpaClass: ${PassgpaClasss}"
+                                                th:value="${PassgpaClass.idClass}"
+                                                th:text="${PassgpaClass.className}">鞋，箱包，配件配饰
+                                        </option>
+                                        <option value="-1">Others</option>
+
+                                    </select>
+                                </div>
+
+
+                                <div id="addclassnames" hidden>
+
+                                    <input type="text" class="form-control "
+                                           id="className" onkeyup="addclass()">
+                                </div>
+
+                                <script>
+
+
+                                    function classselect() {
+
+                                        var $idclassname = $('#idclassname');
+
+
+                                        if ($idclassname.val() === "-1") {
+
+
+                                            $('#addclassnames').show();
+
+                                            $('#addclassname').hide();
+
+                                            $('#addprofessorNames').show();
+
+                                            $('#addprofessorName').hide();
+
+
+                                            $('#classNameinput').val("No Name Found");
+
+                                            $('#classNametext').val(0);
+
+                                            $('#professorNameinput').val("No Name Found");
+
+                                            $('#professorNametext').val(0);
+
+
+                                        } else {
+
+                                            jQuery.ajax({
+                                                url: "/getclass",
+                                                type: "GET",
+                                                data: {
+                                                    "idClass": $idclassname.val(),
+                                                },
+                                                headers: {
+                                                    "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+                                                },
+                                            })
+                                                .done(function (data, textStatus, jqXHR) {
+                                                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                                                    var index;
+                                                    var optionHTML = '';
+                                                    console.log(data);
+
+
+//                                                    major(data.PassgpaMajors);
+
+//                                                    viewclass(data.PassgpaClasses);
+
+                                                    Profe(data.PassgpaProfessorEntityes);
+
+
+                                                })
+                                                .fail(function (jqXHR, textStatus, errorThrown) {
+
+                                                    new PNotify({
+                                                        title: 'Oh No!',
+                                                        text: 'Network Failed',
+                                                        type: 'error',
+                                                        styling: 'bootstrap3'
+                                                    })
+
+
+                                                })
+                                                .always(function () {
+                                                    /* ... */
+                                                });
+
+                                            $('#classNameinput').val($idclassname.children(":selected").text());
+
+                                            $('#classNametext').val($idclassname.val());
+
+                                        }
+
+
+                                    }
+
+
+                                    function addclass() {
+
+                                        $('#classNameinput').val($('#className').val());
+
+                                        $('#classNametext').val(0);
+
+                                    }
+
+                                </script>
+
+
+                                <input th:if="${PassgpaClasss.size()!=0}" hidden id="classNameinput"
+                                       th:value="${PassgpaClasss[0].className}">
+
+                                <input th:if="${PassgpaClasss.size()!=0}" hidden id="classNametext"
+                                       th:value="${PassgpaClasss[0].idClass}">
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label">Professor<span
+                                        class="required">*</span>
+                                </label>
+                                <div id="addprofessorName">
+                                    <select class="form-control" id="idprofessor" onchange="proselect()">
+                                        <!--<option>选择状态</option>-->
+                                        <option value="1"
+                                                th:each="PassgpaProfessorEntity: ${PassgpaProfessorEntitys}"
+                                                th:value="${PassgpaProfessorEntity.idProfeesorTable}"
+                                                th:text="${PassgpaProfessorEntity.professorName}">鞋，箱包，配件配饰
+                                        </option>
+
+                                        <option value="-1">Others</option>
+
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div id="addprofessorNames" hidden>
+
+                                    <input type="text" class="form-control "
+                                           id="professorName" onkeyup="addpro()">
+                                </div>
+                                <script>
+
+                                    function proselect() {
+
+                                        var $idprofessor = $('#idprofessor');
+
+
+                                        if ($idprofessor.val() === "-1") {
+
+
+                                            $('#addprofessorNames').show();
+
+                                            $('#addprofessorName').hide();
+
+
+                                            $('#professorNameinput').val("No Name Found");
+
+                                            $('#professorNametext').val(0);
+
+
+                                        } else {
+
+
+                                            $('#professorNameinput').val($idprofessor.children(":selected").text());
+
+                                            $('#professorNametext').val($idprofessor.val());
+                                        }
+
+                                    }
+
+                                    function addpro() {
+
+
+                                        $('#professorNameinput').val($('#professorName').val());
+
+                                        $('#professorNametext').val(0);
+
+
+                                    }
+                                </script>
+
+                                <input th:if="${PassgpaProfessorEntitys.size()!=0}" hidden
+                                       id="professorNameinput"
+                                       th:value="${PassgpaProfessorEntitys[0].professorName}">
+
+                                <input th:if="${PassgpaProfessorEntitys.size()!=0}" hidden
+                                       id="professorNametext"
+                                       th:value="${PassgpaProfessorEntitys[0].idProfeesorTable}">
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label ">Details<span
+                                        class="required">*</span>
+                                </label>
+
+
+                                <div>
+
+                                            <textarea type="text" class="form-control"
+                                                      id="details"></textarea>
+                                </div>
+
+
+                            </div>
+
+                            <!--<div class="form-group " >-->
+                            <!--<label class="control-label col-md-3 col-sm-3 col-xs-12"> Professor-->
+                            <!--<span class="required">*</span>-->
+                            <!--</label>-->
+                            <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+                            <!--<input type="text" id="idprofessor" required="required"-->
+                            <!--class="form-control " onkeyup="test()">-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            <div class="form-group">
+                                <label class="control-label ">
+                                    Date <span class="required">*</span>
+                                </label>
+                                <div>
+                                    <select class="form-control" id="iddate">
+
+                                        <!--<option>选择状态</option>-->
+                                        <option value="1"
+                                                th:each="PassgpaClassDateEntity: ${PassgpaClassDateEntitys}"
+                                                th:value="${PassgpaClassDateEntity.idDateTable}"
+                                                th:text="${PassgpaClassDateEntity.date}">鞋，箱包，配件配饰
+                                        </option>
+
+                                        <option value="-1">Others</option>
+
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+
+                        </form>
+                        <div class="form-group">
+                            <label class="control-label ">
+                                Upload Study Materials <span class="required">*</span>
+                            </label>
+
+                            <form action="/uploadimage"
+                                  class="dropzone dz-clickable ">
+                                <div class="dz-default dz-message"><span>Drop PDFs here to upload</span></div>
+                            </form>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <!--<button class="btn btn-primary" type="button">Cancel</button>-->
+                                <button class="btn btn-primary" type="reset" onclick="location.reload();">Reset</button>
+                                <button type="submit" class="btn btn-success" id="submitbutton">Submit
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
+<script src="/vendors/file-upload-with-preview/dist/file-upload-with-preview.js"></script>
+
+<script>
+    //    var PNotify = require("pnotify");
+
+    //    function test() {
+    //
+    //        console.log($('#idprofessor').val())
+    //
+    //    }
+
+    var picname = [];
+    var firstUpload = new FileUploadWithPreview('myUniqueUploadId');
+    var firstUploadInfoButton = document.querySelector('#submitbutton');
+    firstUploadInfoButton.addEventListener('click', function () {
+
+        var $PromotionDate = $('#PromotionDate');
+
+        var pic = [];
+
+
+        $('span[data-dz-name]').each(function (index) {
+
+            pic.push($(this).text());
+
+        });
+
+        var $PromotionPrice = $('#PromotionPrice');
+
+        var val = $('#price').val();
+
+        var formData = new FormData();
+
+
+        formData.append("iduni", $('#universitynametext').val());
+        formData.append("universityname", $('#universitynameinput').val());
+        formData.append("idMajor", $('#majorNametext').val());
+        formData.append("majorName", $('#majorNameinput').val());
+        formData.append("idClass", $('#classNametext').val());
+        formData.append("className", $('#classNameinput').val());
+        formData.append("idProfeesorTable", $('#professorNametext').val());
+        formData.append("professorName", $('#professorNameinput').val());
+        formData.append("idDateTable", $('#iddate').val());
+        formData.append("price", (val === "" ? '0' : val));
+        formData.append("isSale", $('#gender').children(".active").children("input").val());
+        formData.append("salePrice", ($PromotionPrice.val() === '' ? '0' : $PromotionPrice.val()));
+        formData.append("saleFrom", $PromotionDate.data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm:ss'));
+        formData.append("saleTo", $PromotionDate.data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm:ss'));
+        formData.append("noteName", pic.toString());
+        formData.append("notePath", picname.toString());
+        formData.append("details", $('#details').val());
+        formData.append("file", firstUpload.cachedFileArray[0]);
+
+
+        $.ajax({
+            url: '/admin/postnote',
+            data: formData,
+            type: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+
+            success: function (msg) {
+                console.log(msg);
+                window.location.href = msg.redirect;
+
+            },
+            error: function (msg) {
+                new PNotify({
+                    title: 'Oh No!',
+                    text: 'Network fails',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+            }
+        });
+
+
+//        onFinishCallback(firstUpload.cachedFileArray[0]);
+    });
+
+
+    var myDropzone = new Dropzone(".dropzone");
+
+    $(function () {
+        myDropzone.on("success", function (file, response) {
+            $("span[data-dz-name]").last().val(response.name);
+//            alert($("span[data-dz-name]").last().val());
+//            console.log(response.name);
+            picname.push(response.name);
+            console.log(picname);
+
+
+        });
+    });
+
+
+
+
+    function postUni() {
+
+        var val = $('#universityname').val();
+
+        if (val !== "") {
+            jQuery.ajax({
+                url: "/admin/addUni?" + jQuery.param({
+                    "universityname": val,
+                }),
+                type: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                    console.log(data);
+
+                    $('#adduniversityname').hide();
+                    $('#idUniversity').append($('<option>', {
+                        value: data.iduni,
+                        text: data.universityname
+                    })).val(data.iduni);
+                    $('#adduniversitynames').show();
+
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                new PNotify({
+                    title: 'Oh No!',
+                    text: 'HTTP Request Failed',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+            })
+                .always(function () {
+                    /* ... */
+                });
+        } else {
+
+            new PNotify({
+                title: 'Oh No!',
+                text: 'There must be some inputs.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+        }
+
+
+    }
+
+
+    $('#PromotionDate').daterangepicker({
+//        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+            format: 'MM/DD/YYYY HH:mm'
+        }
+    });
+
+
+</script>

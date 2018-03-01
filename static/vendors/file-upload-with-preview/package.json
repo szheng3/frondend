@@ -1,0 +1,79 @@
+{
+  "_from": "file-upload-with-preview",
+  "_id": "file-upload-with-preview@2.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-7EQNZsQWnJnFgwPUXA+Br5Yftt2YP3rPFRd5rE75mTl76Q9JY2v6Bs2ZpI6U2Lhq7nmH5WncxFUpXY4ezvq3pQ==",
+  "_location": "/file-upload-with-preview",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "file-upload-with-preview",
+    "name": "file-upload-with-preview",
+    "escapedName": "file-upload-with-preview",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/file-upload-with-preview/-/file-upload-with-preview-2.0.1.tgz",
+  "_shasum": "e4e9f09e6d469920b144e2bc5e5227a780bff41d",
+  "_spec": "file-upload-with-preview",
+  "_where": "/Users/shuai/Desktop/components",
+  "author": {
+    "name": "Promosis"
+  },
+  "bugs": {
+    "url": "https://github.com/promosis/file-upload-with-preview/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "John Datserakis",
+      "email": "johndatserakis@users.noreply.github.com"
+    }
+  ],
+  "deprecated": false,
+  "description": "A simple file-upload utility that shows a preview of the uploaded image. Written in pure JavaScript. No dependencies. Works well with Bootstrap 4 or without a framework.",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-rollup": "^2.15.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-size": "^2.1.0",
+    "jest": "^21.2.1",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-uglify": "^2.0.1",
+    "run-sequence": "^1.2.2"
+  },
+  "homepage": "https://github.com/promosis/file-upload-with-preview",
+  "keywords": [
+    "upload",
+    "uploader",
+    "preview",
+    "image",
+    "file",
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "main": "./dist/file-upload-with-preview.min.js",
+  "name": "file-upload-with-preview",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/promosis/file-upload-with-preview.git"
+  },
+  "scripts": {
+    "build": "gulp clean && gulp script && gulp style",
+    "test": "jest",
+    "watch": "gulp"
+  },
+  "version": "2.0.1"
+}

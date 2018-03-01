@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-layout-decorate="~{fragments/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Notes</title>
+    <link rel="stylesheet" type="text/css"
+          href="/vendors/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="/vendors/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+
+</head>
+<body>
+<div class="right_col" role="main" data-layout-fragment="content" style="background: white">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Update Notes</h3>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Update Class</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br>
+                        <div class="custom-file-container" data-upload-id="myUniqueUploadId">
+                            <label>Upload Image <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                                                   title="Clear Image"></a></label>
+
+                            <label class="custom-file-container__custom-file">
+                                <input type="file" class="custom-file-container__custom-file__custom-file-input"
+                                       accept="image/*" multiple>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            </label>
+                            <div class="custom-file-container__image-preview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Price</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label " for="price"> Price
+                                    <span class="required">*</span>
+                                </label>
+                                <div>
+                                    <input type="number" id="price" required="required"
+                                           class="form-control " th:value="${classdetails.price}">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Promotion<span
+                                        class="required">*</span></label>
+                                <div>
+                                    <div id="gender" class="btn-group" data-toggle="buttons"
+                                         onchange="toggle()" th:if="${classdetails.isSale.name()=='NORMAL'}">
+                                        <label class="btn btn-default active" data-toggle-class="btn-primary"
+                                               data-toggle-passive-class="btn-default">
+                                            <input type="radio" name="gender" value="NORMAL"> &nbsp; No &nbsp;
+                                        </label>
+
+                                        <label class="btn btn-primary" data-toggle-class="btn-primary"
+                                               data-toggle-passive-class="btn-default">
+                                            <input type="radio" name="gender" value="SALE">&nbsp; Yes &nbsp;
+                                        </label>
+                                    </div>
+
+                                    <div id="gender" class="btn-group" data-toggle="buttons"
+                                         onchange="toggle()" th:if="${classdetails.isSale.name()=='SALE'}">
+                                        <label class="btn btn-default" data-toggle-class="btn-primary"
+                                               data-toggle-passive-class="btn-default">
+                                            <input type="radio" name="gender" value="NORMAL"> &nbsp; No &nbsp;
+                                        </label>
+
+                                        <label class="btn btn-primary active" data-toggle-class="btn-primary"
+                                               data-toggle-passive-class="btn-default">
+                                            <input type="radio" name="gender" value="SALE">&nbsp; Yes &nbsp;
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+
+                                function toggle() {
+
+
+                                    if ($('#gender').children(".active").children("input").val() === 'NORMAL') {
+
+                                        $('#PromotionDate').attr("disabled", 'disabled');
+
+                                        $('#PromotionPrice').attr("disabled", 'disabled');
+
+
+                                    } else if ($('#gender').children(".active").children("input").val() === 'SALE') {
+
+                                        $('#PromotionDate').removeAttr("disabled");
+
+                                        $('#PromotionPrice').removeAttr("disabled");
+                                    }
+
+//                                    console.log([[${classdetails.saleFrom}]]);
+
+
+                                }
+
+                            </script>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Promotion Date <span
+                                        class="required"></span>
+                                </label>
+                                <div th:if="${classdetails.isSale.name()=='NORMAL'}">
+                                    <input id="PromotionDate"
+                                           class="date-picker form-control "
+                                           required="required" type="text" disabled="disabled" value="123">
+                                </div>
+
+                                <div th:if="${classdetails.isSale.name()=='SALE'}">
+                                    <input id="PromotionDate"
+                                           class="date-picker form-control "
+                                           required="required" type="text" value="123">
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Promotion Price <span
+                                        class="required"></span>
+                                </label>
+                                <div th:if="${classdetails.isSale.name()=='NORMAL'}">
+                                    <input id="PromotionPrice" class=" form-control "
+                                           required="required" type="text" disabled="disabled">
+                                </div>
+
+                                <div th:if="${classdetails.isSale.name()=='SALE'}">
+                                    <input id="PromotionPrice" class=" form-control "
+                                           required="required" type="text" th:value="${classdetails.salePrice}">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Fill class information
+
+                        </h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br>
+                        <form class="form-horizontal form-label-left">
+
+
+                            <div class="form-group">
+                                <label class="control-label " for="idUniversity">University<span
+                                        class="required">*</span>
+                                </label>
+
+
+                                <div id="adduniversityname">
+
+                                    <input type="text" class="form-control "
+                                           id="universityname"
+                                           th:value="${classdetails.passgpaUniversityByIdUniversity.universityname}">
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label class="control-label ">Major<span
+                                        class="required">*</span>
+                                </label>
+
+
+                                <div id="addmajornames">
+
+                                    <input type="text" class="form-control "
+                                           id="majorName" th:value="${classdetails.passgpaMajorByIdMajor.majorName}">
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label ">Class<span
+                                        class="required">*</span>
+                                </label>
+
+
+                                <div id="addclassnames">
+
+                                    <input type="text" class="form-control "
+                                           id="className"
+                                           th:value="${classdetails.passgpaClassByIdClassname.className}">
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label">Professor<span
+                                        class="required">*</span>
+                                </label>
+
+
+                                <div id="addprofessorNames">
+
+                                    <input type="text" class="form-control "
+                                           id="professorName"
+                                           th:value="${classdetails.passgpaProfessorByIdProfessor.professorName}">
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label ">Details<span
+                                        class="required">*</span>
+                                </label>
+
+
+                                <div>
+
+                                            <textarea type="text" class="form-control"
+                                                      id="details" th:text="${classdetails.details}"></textarea>
+                                </div>
+
+
+                            </div>
+
+                            <!--<div class="form-group " >-->
+                            <!--<label class="control-label col-md-3 col-sm-3 col-xs-12"> Professor-->
+                            <!--<span class="required">*</span>-->
+                            <!--</label>-->
+                            <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+                            <!--<input type="text" id="idprofessor" required="required"-->
+                            <!--class="form-control " onkeyup="test()">-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            <div class="form-group">
+                                <label class="control-label ">
+                                    Date <span class="required">*</span>
+                                </label>
+                                <div>
+                                    <select class="form-control" id="iddate">
+
+                                        <!--<option>选择状态</option>-->
+                                        <option value="1"
+                                                th:each="PassgpaClassDateEntity: ${PassgpaClassDateEntitys}"
+                                                th:value="${PassgpaClassDateEntity.idDateTable}"
+                                                th:text="${PassgpaClassDateEntity.date}">鞋，箱包，配件配饰
+                                        </option>
+
+                                        <option value="-1">Others</option>
+
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+
+                        </form>
+                        <div class="form-group">
+                            <label class="control-label ">
+                                Upload Study Materials <span class="required">*</span>
+                            </label>
+
+                            <form action="/uploadimage"
+                                  class="dropzone dz-clickable ">
+                                <div class="dz-default dz-message"><span>Drop PDFs here to upload</span></div>
+                            </form>
+
+                        </div>
+
+
+                        <input th:value="${classdetails.saleFrom.getTime()}" id="dateFrom" hidden></input>
+
+                        <input th:value="${classdetails.saleTo.getTime()}" id="dateTo" hidden></input>
+
+                        <input th:value="${classdetails.idClassUserTable}" id="idclass" hidden></input>
+
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <!--<button class="btn btn-primary" type="button">Cancel</button>-->
+                                <button class="btn btn-primary" type="reset" onclick="location.reload();">Reset</button>
+                                <button type="submit" class="btn btn-success" id="submitbutton">Submit
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
+<script src="/vendors/file-upload-with-preview/dist/file-upload-with-preview.js"></script>
+
+<script xmlns:th="http://www.thymeleaf.org" th:inline="javascript">
+    //    var PNotify = require("pnotify");
+
+    //    function test() {
+    //
+    //        console.log($('#idprofessor').val())
+    //
+    //    }
+
+    var picname = [];
+    var firstUpload = new FileUploadWithPreview('myUniqueUploadId');
+    var firstUploadInfoButton = document.querySelector('#submitbutton');
+    firstUploadInfoButton.addEventListener('click', function () {
+
+        var $PromotionDate = $('#PromotionDate');
+
+        var pic = [];
+
+
+        $('span[data-dz-name]').each(function (index) {
+
+            pic.push($(this).text());
+
+        });
+
+        var $PromotionPrice = $('#PromotionPrice');
+
+        var val = $('#price').val();
+
+        var formData = new FormData();
+
+        console.log($('#idclass').val());
+        formData.append("idClassUserTable", $('#idclass').val());
+        formData.append("universityname", $('#universityname').val());
+        formData.append("majorName", $('#majorName').val());
+        formData.append("classnameName", $('#className').val());
+        formData.append("professorName", $('#professorName').val());
+        formData.append("idDate", $('#iddate').val());
+        formData.append("price", (val === "" ? '0' : val));
+        formData.append("isSale", $('#gender').children(".active").children("input").val());
+        formData.append("salePrice", ($PromotionPrice.val() === '' ? '0' : $PromotionPrice.val()));
+        formData.append("saleFrom", $PromotionDate.data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm:ss'));
+        formData.append("saleTo", $PromotionDate.data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm:ss'));
+        formData.append("noteName", pic.toString());
+        formData.append("notePath", picname.toString());
+        formData.append("details", $('#details').val());
+        formData.append("file", firstUpload.cachedFileArray[0]);
+
+
+        $.ajax({
+            url: '/admin/updatenote',
+            data: formData,
+            type: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+
+            success: function (msg) {
+                console.log(msg);
+                window.location.href = msg.redirect;
+
+            },
+            error: function (msg) {
+                new PNotify({
+                    title: 'Oh No!',
+                    text: 'Network fails',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+            }
+        });
+
+
+//        onFinishCallback(firstUpload.cachedFileArray[0]);
+    });
+
+
+    var myDropzone = new Dropzone(".dropzone");
+
+    $(function () {
+        myDropzone.on("success", function (file, response) {
+            $("span[data-dz-name]").last().val(response.name);
+//            alert($("span[data-dz-name]").last().val());
+//            console.log(response.name);
+            picname.push(response.name);
+            console.log(picname);
+
+
+        });
+    });
+
+
+    function postUni() {
+
+        var val = $('#universityname').val();
+
+        if (val !== "") {
+            jQuery.ajax({
+                url: "/admin/addUni?" + jQuery.param({
+                    "universityname": val,
+                }),
+                type: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                    console.log(data);
+
+                    $('#adduniversityname').hide();
+                    $('#idUniversity').append($('<option>', {
+                        value: data.iduni,
+                        text: data.universityname
+                    })).val(data.iduni);
+                    $('#adduniversitynames').show();
+
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                new PNotify({
+                    title: 'Oh No!',
+                    text: 'HTTP Request Failed',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+            })
+                .always(function () {
+                    /* ... */
+                });
+        } else {
+
+            new PNotify({
+                title: 'Oh No!',
+                text: 'There must be some inputs.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+        }
+
+    }
+
+
+    var start = moment(parseInt($('#dateFrom').val()));
+
+    var end = moment(parseInt($('#dateTo').val()));
+
+
+    $('#PromotionDate').daterangepicker({
+        startDate: start,
+        endDate: end,
+        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+            format: 'MM/DD/YYYY HH:mm'
+        }
+    });
+
+
+    $(function () {
+
+
+
+
+        /*<![CDATA[*/
+
+
+        firstUpload.imagePreview.style.backgroundImage = "url(\'" + [[${classdetails.getImagePath()}]] + "\')";
+
+
+
+        /*]]>*/
+
+
+    });
+
+
+</script>

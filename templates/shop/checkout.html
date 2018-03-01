@@ -1,0 +1,189 @@
+<!doctype html>
+<html data-layout-decorate="~{shopfragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>checkout</title>
+</head>
+<body>
+
+
+<div class="container" data-layout-fragment="content">
+    <div class="check">
+        <div class="col-md-3 cart-total">
+            <a class="continue" href="/catalogue">Continue to basket</a>
+            <div class="price-details">
+                <h3>Price Details</h3>
+                <span>Total</span>
+                <span class="total1" th:text="${totalOriginPrice}">6200.00</span>
+                <span>Discount</span>
+                <span class="total1" th:text="${totalOriginPrice} - ${totalTruePrice}">---</span>
+
+                <div class="clearfix"></div>
+            </div>
+            <ul class="total_price">
+                <li class="last_price"><h4>TOTAL</h4></li>
+                <li class="last_price"><span th:text="${totalTruePrice}">6350.00</span></li>
+                <div class="clearfix"></div>
+            </ul>
+
+
+            <div class="clearfix"></div>
+            <a class="order" href="#">Place Order</a>
+            <div class="total-item">
+                <h3>OPTIONS</h3>
+                <h4>COUPONS</h4>
+                <button class="button1" href="#">Apply Coupons</button>
+                <!--<p><a href="#">Log In</a> to use accounts - linked coupons</p>-->
+            </div>
+        </div>
+        <div class="col-md-9 cart-items">
+            <h1>My Shopping Bag ([[${PassgpaCartEntitys.size()}]])</h1>
+
+
+            <div class="cart-header" th:id="'cart'+${PassgpaCartEntity.idCart}"
+                 th:each="PassgpaCartEntity: ${PassgpaCartEntitys}">
+                <div class="close1"
+                     th:onclick="'fade(' + ${PassgpaCartEntity.idCart} +');'"
+                ></div>
+
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="/images/notes.jpg" class="img-responsive" alt=""/>
+                    </div>
+                    <div class="cart-item-info">
+                        <h3><a href="#" th:text="${PassgpaCartEntity.passgpaClassUserEntity.classnameName}">STUDY
+                            RESOURCE</a><span
+                                th:text="${PassgpaCartEntity.passgpaClassUserEntity.universityName}">Model No: 3578</span>
+                        </h3>
+                        <ul class="qty">
+                            <li><p th:text="${PassgpaCartEntity.passgpaClassUserEntity.professorName}">Size : 5</p></li>
+                            <li><p th:text="${PassgpaCartEntity.passgpaClassUserEntity.dateName}">Size : 5</p></li>
+
+                            <!--<li><p>Qty : 1</p></li>-->
+                        </ul>
+
+                        <div class="delivery">
+                            <p th:text="'Price: '+${PassgpaCartEntity.passgpaClassUserEntity.price}">Service Charges :
+                                Rs.100.00</p>
+                            <!--<span>Delivered in 2-3 bussiness days</span>-->
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+<script>
+
+    function fade(idcart) {
+
+
+        var cartheader = '#cart' + idcart;
+
+        console.log(cartheader);
+
+        $(cartheader).fadeOut('slow', function (c) {
+
+            jQuery.ajax({
+                url: "/admin/deletecheckout?" + jQuery.param({
+                    "idCart": idcart,
+                }),
+                type: "DELETE",
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                    console.log(data);
+                    $(cartheader).remove();
+                    location.reload();
+
+
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log("HTTP Request Failed");
+                })
+                .always(function () {
+                    /* ... */
+                });
+
+
+        });
+    }
+
+
+    $('.order').click(function () {
+
+        jQuery.ajax({
+            url: "/admin/checkorder",
+            type: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        })
+            .done(function (data, textStatus, jqXHR) {
+                console.log("HTTP Request Succeeded: " + jqXHR.status);
+                console.log(data);
+
+                if (data.info === '1') {
+
+                    window.location.href = data.redirect;
+
+
+                    new PNotify({
+                        title: 'Success',
+                        text: 'You successfully place the order.',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    })
+
+                } else if (data.info === '0') {
+
+                    new PNotify({
+                        title: 'error',
+                        text: 'Sorry, you do not have enough money.',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    })
+
+                }
+
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+
+            new PNotify({
+                title: 'Oh No!',
+                text: 'Network error, Please try again.',
+                type: 'error',
+                styling: 'bootstrap3'
+            })
+        })
+            .always(function () {
+                /* ... */
+            });
+
+
+    })
+
+
+
+
+</script>
+

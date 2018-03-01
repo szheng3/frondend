@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{shopfragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>myclass</title>
+    <meta name="description"
+          content="Sell your study resources to make easily student money. Instant access to millions of Study Resources. Improve">
+
+</head>
+<body>
+<div data-layout-fragment="content">
+    <div class="container">
+
+        <div class="col-md-12 w_content" style="text-align: center">
+            <div class="row">
+
+
+                <!-- grids_of_4 -->
+                <div class="col-md-3 col-sm-3 col-xs-12" th:each="PassgpaClassUserEntity: ${PassgpaClassUserEntitys}"
+                     style="margin-bottom: 10px;">
+                    <div class="content_box"><a
+                            th:href="@{'/class/details/'+${PassgpaClassUserEntity.idClassUserTable}}">
+                        <img th:src="@{${PassgpaClassUserEntity.imagePath}}" class="img-responsive" alt=""/>
+                    </a>
+                        <h4><a href="details.html"
+                               th:href="@{'/class/details/'+${PassgpaClassUserEntity.idClassUserTable}}"
+                               th:text="${PassgpaClassUserEntity.classnameName}"> Duis autem</a></h4>
+                        <p th:text="${PassgpaClassUserEntity.universityName}">It is a long established fact that</p>
+                        <div class="grid_1 simpleCart_shelfItem">
+
+
+                            <div class="item_add"><span class="item_price"
+                                                        th:text="${PassgpaClassUserEntity.user.username}"><h6>ONLY $99.00</h6></span>
+                            </div>
+                            <div class="item_add"><span class="item_price"><a
+                                    th:href="@{'/class/details/'+${PassgpaClassUserEntity.idClassUserTable}}">View</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+
+    </div>
+</div>
+</body>
+</html>

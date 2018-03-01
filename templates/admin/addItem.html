@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>增加商品</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" charset="utf-8" th:src="@{/ueditor.config.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/ueditor.all.js}"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" th:src="@{/lang/zh-cn/zh-cn.js}"></script>
+
+</head>
+<body>
+<div class="right_col" role="main" data-layout-fragment="content">
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>增加商品
+                        <!--<small>different form elements</small>-->
+                    </h2>
+                    <!--<ul class="nav navbar-right panel_toolbox">-->
+                    <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
+                    <!--</li>-->
+                    <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+                    <!--aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                    <!--<li><a href="#">Settings 1</a>-->
+                    <!--</li>-->
+                    <!--<li><a href="#">Settings 2</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li><a class="close-link"><i class="fa fa-close"></i></a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p>上传商品图片</p>
+                    <form method="POST" th:action="@{/uploadimage}" class="dropzone dz-clickable" id="dropzone"></form>
+
+
+                    <br/>
+
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="goodsName">商品名字<span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="goodsName" required="required"
+                                       class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">物品分类<span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" id="nameCatagory">
+                                    <!--<option>选择状态</option>-->
+                                    <option value="1" th:each="lexinCategoryEntity: ${lexinCategoryEntitys}"
+                                            th:value="${lexinCategoryEntity.id}"
+                                            th:text="${lexinCategoryEntity.catName}">鞋，箱包，配件配饰
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">自定义分类<span
+                                    class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" id="customCategory">
+                                    <!--<option>选择状态</option>-->
+                                    <option value="1" th:each="LexinCustomCategoryEntity: ${LexinCustomCategoryEntitys}"
+                                            th:value="${LexinCustomCategoryEntity.id}"
+                                            th:text="${LexinCustomCategoryEntity.cateName}">
+                                        鞋，箱包，配件配饰
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--todo view and update-->
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">品牌分类<span
+                                    class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control" id="brandId">
+                                    <!--<option>选择状态</option>-->
+                                    <option value="1" th:each="lexinBrandEntity: ${lexinBrandEntitys}"
+                                            th:value="${lexinBrandEntity.id}" th:text="${lexinBrandEntity.brandName}">
+                                        鞋，箱包，配件配饰
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="item form-group">
+                            <label for="marketPrice" class="control-label col-md-3 col-sm-3 col-xs-12 ">人民币价格<span
+                                    class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="marketPrice" class="form-control col-md-7 col-xs-12" type="number"
+                                       name="middle-name" required="required">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label for="shopPrice" class="control-label col-md-3 col-sm-3 col-xs-12">悦米价格<span
+                                    class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="shopPrice" class="form-control col-md-7 col-xs-12" type="number"
+                                       name="middle-name" required="required">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label for="beizhu" class="control-label col-md-3 col-sm-3 col-xs-12">物品描述<span
+                                    class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea id="beizhu" class="form-control col-md-7 col-xs-12" rows="3" type="text"
+                                          name="beizhu" required="required"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label for="amount" class="control-label col-md-3 col-sm-3 col-xs-12">库存<span
+                                    class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="amount" class="form-control col-md-7 col-xs-12" type="number"
+                                       name="amount"  required="required" >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">物品状态<span
+                                    class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="icheckbox_flat-green checked" style="position: relative;"><input
+                                                type="checkbox" class="flat" style="position: absolute; opacity: 0;"
+                                                id="isHot">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        热销
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="icheckbox_flat-green checked" style="position: relative;"><input
+                                                type="checkbox" class="flat" style="position: absolute; opacity: 0;"
+                                                id="isNew">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        新到
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="icheckbox_flat-green checked" style="position: relative;"><input
+                                                type="checkbox" class="flat" style="position: absolute; opacity: 0;"
+                                                id="isBest">
+                                            <ins class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        推荐
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="icheckbox_flat-green checked" style="position: relative;"><input
+                                                type="checkbox" class="flat" style="position: absolute; opacity: 0;"
+                                                id="isOnSale">
+                                            <ins onclick="hideorshowsale()" class="iCheck-helper"
+                                                 style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                        </div>
+                                        打折
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group" id="saledate" hidden>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">打折时间<span
+                                    class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form class="form-horizontal">
+                                    <fieldset>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <div class="input-prepend input-group">
+                                                    <span class="add-on input-group-addon"><i
+                                                            class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                    <input type="text" id="datetimepicker2"
+                                                           class="form-control" >
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div style="text-align: center">
+
+                                <label for="beizhu" class="" style="">物品详情<span
+                                        class="required">*</span></label>
+                            </div>
+                            <div id="editor" type="text/plain" style="width:1024px;height:500px;margin-left: auto;
+    margin-right: auto;"></div>
+
+
+                        </div>
+
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button class="btn btn-primary" type="button">取消</button>
+                                <button type="submit" class="btn btn-success" onclick="addGood()">提交</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+<script>
+    var ue = UE.getEditor('editor');
+
+    var myDropzone = new Dropzone(".dropzone");
+
+    validator.message['empty'] = '这是必填字段';
+
+    $('form').submit(function(e){
+        e.preventDefault();
+        var submit = true;
+
+        // Validate the form using generic validaing
+        if( !validator.checkAll( $(this) ) ){
+            submit = false;
+        }
+
+        if( submit )
+            this.submit();
+
+        return false;
+    });
+
+
+
+    $(function () {
+        myDropzone.on("success", function (file, response) {
+            $("span[data-dz-name]").last().val(response.name);
+//            alert($("span[data-dz-name]").last().val());
+
+
+        });
+    });
+
+
+    $('#datetimepicker2').daterangepicker(
+        {
+            startDate: moment().startOf('day'),
+            //endDate: moment(),
+            //minDate: '01/01/2012',    //最小时间
+//            maxDate: moment(), //最大时间
+//            dateLimit: {
+//                days: 30
+//            }, //起止时间的最大间隔
+//            showDropdowns: true,
+//            showWeekNumbers: false, //是否显示第几周
+            timePicker: true, //是否显示小时和分钟
+//            timePickerIncrement: 60, //时间的增量，单位为分钟
+//            timePicker12Hour: false, //是否使用12小时制来显示时间
+//            ranges: {
+//                //'最近1小时': [moment().subtract('hours',1), moment()],
+//                '今日': [moment().startOf('day'), moment()],
+//                '昨日': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
+//                '最近7日': [moment().subtract('days', 6), moment()],
+//                '最近30日': [moment().subtract('days', 29), moment()]
+//            },
+//            opens: 'right', //日期选择框的弹出位置
+//            buttonClasses: ['btn btn-default'],
+//            applyClass: 'btn-small btn-primary blue',
+//            cancelClass: 'btn-small',
+//            format: 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
+//            separator: ' to ',
+            locale: {
+                applyLabel: '确定',
+                cancelLabel: '取消',
+                fromLabel: '起始时间',
+                toLabel: '结束时间',
+                customRangeLabel: '自定义',
+                daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+                    '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                format: 'MM/DD/YYYY HH:mm'
+//                format: 'YYYY-MM-DD HH:mm'
+            }
+        });
+
+    function hideorshowsale() {
+
+        if ($("#isOnSale").is(":checked")) {
+            // checkbox is checked
+            $("#saledate").hide();
+
+
+        } else {
+
+            $("#saledate").show();
+
+        }
+    }
+
+
+    function addGood() {
+
+
+        if (validator.checkAll($('#demo-form2'))) { //checkbox
+            var isHot = 0;
+            var isNew = 0;
+            var isBest = 0;
+            var isOnSale = 0;
+
+            if ($("#isHot").is(":checked")) {
+                // checkbox is checked
+                isHot = 1;
+
+            }
+
+            if ($("#isNew").is(":checked")) {
+                // checkbox is checked
+                isNew = 1;
+
+            }
+            if ($("#isBest").is(":checked")) {
+                // checkbox is checked
+                isBest = 1;
+
+            }
+
+            if ($("#isOnSale").is(":checked")) {
+                // checkbox is checked
+                isOnSale = 1;
+
+            }
+
+            var pic = [];
+
+            var picname = [];
+
+
+            $('span[data-dz-name]').each(function (index) {
+
+                pic.push($(this).text());
+                picname.push($(this).val());
+
+            });
+
+
+            jQuery.ajax({
+                url: "/newProduct?" + jQuery.param({
+                    "goodsName": $('#goodsName').val(),
+                    "marketPrice": $('#marketPrice').val(),
+                    "shopPrice": $('#shopPrice').val(),
+                    "catId": $('#nameCatagory').val(),
+                    "brandId": $('#brandId').val(),
+                    "beizhu": $('#beizhu').val(),
+                    "amount": $('#amount').val(),
+                    "isHot": isHot,
+                    "isNew": isNew,
+                    "isBest": isBest,
+                    "isOnSale": isOnSale,
+                    "dateRange": $('#datetimepicker2').val(),
+                    "pic": pic.toString(),
+                    "customCategory": $('#customCategory').val(),
+                    "goodsDesc": UE.getEditor('editor').getContent(),
+                    "picname": pic.toString()
+                }),
+                type: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+            })
+        }
+
+
+    }
+
+</script>

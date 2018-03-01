@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PassGPA</title>
+
+
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="/vendors/bootstrap/dist/css/bootstrap.min.css">
+    <!-- jQuery (necessary JavaScript plugins) -->
+    <script type='text/javascript' src="/js/jquery-1.11.1.min.js"></script>
+    <link href="/css/shopcustom.css" rel='stylesheet' type='text/css'/>
+    <meta name="description"
+          content="Sell your study resources to make easily student money. Instant access to millions of Study Resources. Improve your scores.">
+
+    <!-- Custom Theme files -->
+    <link href="/css/style.css" rel='stylesheet' type='text/css'/>
+    <!-- Custom Theme files -->
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- start menu -->
+    <link href="/css/megamenu.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="/js/megamenu.js"></script>
+    <script>$(document).ready(function () {
+        $(".megamenu").megamenu();
+    });</script>
+    <script src="/js/menu_jquery.js"></script>
+    <script src="/js/simpleCart.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108864867-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-108864867-1');
+    </script>
+    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css"/>
+
+
+</head>
+
+<body>
+
+<!-- top navigation -->
+<div data-th-replace="shopfragments/fragment-top-navigation :: top-navigation"></div>
+<!-- /top navigation -->
+
+<!-- page content -->
+<div data-layout-fragment="content"></div>
+<!-- /page content -->
+
+<!-- footer content -->
+<div data-th-replace="shopfragments/fragment-footer-content :: footer-content"></div>
+<!-- /footer content -->
+
+<script src="/semantic/dist/semantic.min.js"></script>
+
+<script src="/vendors/pnotify/dist/pnotify.js"></script>
+<script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>
+<script src="/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+<script>
+
+
+    $('.ui.search')
+        .search({
+            apiSettings: {
+                url: '/search/{query}'
+            },
+            fields: {
+                results: 'items',
+                title: 'className',
+                description: 'universityName',
+                url: 'classurl'
+            },
+            minCharacters: 2
+        })
+    ;
+
+
+    $('.simpleCart_empty').click(function () {
+
+        jQuery.ajax({
+            url: "/admin/allcheckout",
+            type: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        })
+            .done(function (data, textStatus, jqXHR) {
+                console.log("HTTP Request Succeeded: " + jqXHR.status);
+                console.log(data);
+
+                location.reload();
+
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+
+            new PNotify({
+                title: 'Oh No!',
+                text: 'Network error, Please try again.',
+                type: 'error',
+                styling: 'bootstrap3'
+            })
+        })
+            .always(function () {
+                /* ... */
+            });
+
+
+    })
+
+</script>
+
+</body>
+</html>

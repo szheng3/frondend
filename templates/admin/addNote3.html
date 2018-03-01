@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Note</title>
+    <link rel="stylesheet" type="text/css"
+          href="/vendors/file-upload-with-preview/dist/file-upload-with-preview.min.css">
+
+</head>
+<body>
+<div class="right_col" role="main" data-layout-fragment="content">
+
+    <!-- page content -->
+    <div class="">
+        <div class="page-title">
+            <!--<div class="title_left">-->
+            <!--<h3>Add Note</h3>-->
+            <!--</div>-->
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Add Note</h2>
+                        <!--<ul class="nav navbar-right panel_toolbox">-->
+                        <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
+                        <!--</li>-->
+                        <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+                        <!--aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
+                        <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#">Settings 1</a>-->
+                        <!--</li>-->
+                        <!--<li><a href="#">Settings 2</a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--</li>-->
+                        <!--<li><a class="close-link"><i class="fa fa-close"></i></a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+
+                        <!-- Smart Wizard -->
+                        <!--<p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>-->
+                        <div id="wizard2" class="form_wizard wizard_horizontal">
+                            <ul class="wizard_steps">
+                                <li>
+                                    <a href="#step-1">
+                                        <span class="step_no">1</span>
+                                        <span class="step_descr">
+                                              Step 1<br/>
+                                              <small>Step 1 Add Class Details</small>
+                                          </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-2">
+                                        <span class="step_no">2</span>
+                                        <span class="step_descr">
+                                              Step 2<br/>
+                                              <small>Step 2 Add Price</small>
+                                          </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-3">
+                                        <span class="step_no">3</span>
+                                        <span class="step_descr">
+                                              Step 3<br/>
+                                              <small>Step 3 Add Notes</small>
+                                          </span>
+                                    </a>
+                                </li>
+                                <!--<li>-->
+                                <!--<a href="#step-4">-->
+                                <!--<span class="step_no">4</span>-->
+                                <!--<span class="step_descr">-->
+                                <!--Step 4<br/>-->
+                                <!--<small>Step 4 description</small>-->
+                                <!--</span>-->
+                                <!--</a>-->
+                                <!--</li>-->
+                            </ul>
+                            <div id="step-1">
+                                <form class="form-horizontal form-label-left">
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="idUniversity">University<span
+                                                class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="adduniversitynames">
+                                            <select class="form-control" id="idUniversity" onchange="addUni()">
+                                                <!--<option>选择状态</option>-->
+                                                <option value="1"
+                                                        th:each="passgpaUniversityEntity: ${passgpaUniversityEntitys}"
+                                                        th:value="${passgpaUniversityEntity.iduni}"
+                                                        th:text="${passgpaUniversityEntity.universityname}">鞋，箱包，配件配饰
+                                                </option>
+                                                <option value="-1">Others</option>
+
+                                            </select>
+
+
+                                        </div>
+
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="adduniversityname" hidden>
+
+                                            <input type="text" class="form-control col-md-7 col-xs-12"
+                                                   id="universityname" onkeyup="adduniversityname()">
+                                        </div>
+                                        <script>
+
+                                            function addUni() {
+
+
+                                                var $idUniversity = $('#idUniversity');
+
+                                                if ($idUniversity.val() === "-1") {
+
+
+                                                    $('#adduniversityname').show();
+
+                                                    $('#adduniversitynames').hide();
+
+                                                    $('#addmajornames').show();
+
+                                                    $('#addmajorname').hide();
+
+                                                    $('#addclassnames').show();
+
+                                                    $('#addclassname').hide();
+
+                                                    $('#addprofessorNames').show();
+
+                                                    $('#addprofessorName').hide();
+
+
+                                                    $('#universitynameinput').val("No Name Found");
+
+                                                    $('#universitynametext').val(0);
+
+                                                    $('#majorNameinput').val("No Name Found");
+
+                                                    $('#majorNametext').val(0);
+
+                                                    $('#classNameinput').val("No Name Found");
+
+                                                    $('#classNametext').val(0);
+
+                                                    $('#professorNameinput').val("No Name Found");
+
+                                                    $('#professorNametext').val(0);
+
+
+                                                } else {
+
+                                                    $('#universitynameinput').val($idUniversity.children(":selected").text());
+
+                                                    $('#universitynametext').val($idUniversity.val());
+
+                                                }
+
+
+                                            }
+
+                                            function adduniversityname() {
+
+                                                $('#universitynameinput').val($('#universityname').val());
+
+                                                $('#universitynametext').val(0);
+
+
+                                            }
+
+
+                                        </script>
+
+                                        <input th:if="${passgpaUniversityEntitys.size()!=0}" hidden
+                                               id="universitynameinput"
+                                               th:value="${passgpaUniversityEntitys[0].universityname}">
+
+                                        <input th:if="${passgpaUniversityEntitys.size()!=0}" hidden
+                                               id="universitynametext"
+                                               th:value="${passgpaUniversityEntitys[0].iduni}">
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Major<span
+                                                class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="addmajorname">
+                                            <select class="form-control" id="idMajor" onchange="majorselect()">
+                                                <!--<option>选择状态</option>-->
+
+
+                                                <option value="1"
+                                                        th:each="PassgpaMajor: ${PassgpaMajors}"
+                                                        th:value="${PassgpaMajor.idMajor}"
+                                                        th:text="${PassgpaMajor.majorName}">鞋，箱包，配件配饰
+                                                </option>
+
+                                                <option value="-1">Others</option>
+
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="addmajornames" hidden>
+
+                                            <input type="text" class="form-control col-md-7 col-xs-12"
+                                                   id="majorName" onkeyup="addmajor()">
+
+
+                                        </div>
+
+                                        <script>
+
+                                            function majorselect() {
+
+                                                var $idMajor = $('#idMajor');
+
+
+                                                if ($idMajor.val() === "-1") {
+
+
+                                                    $('#addmajornames').show();
+
+                                                    $('#addmajorname').hide();
+
+                                                    $('#addclassnames').show();
+
+                                                    $('#addclassname').hide();
+
+                                                    $('#addprofessorNames').show();
+
+                                                    $('#addprofessorName').hide();
+
+
+                                                    $('#majorNameinput').val("No Name Found");
+
+                                                    $('#majorNametext').val(0);
+
+                                                    $('#classNameinput').val("No Name Found");
+
+                                                    $('#classNametext').val(0);
+
+                                                    $('#professorNameinput').val("No Name Found");
+
+                                                    $('#professorNametext').val(0);
+
+
+                                                } else {
+
+
+                                                    $('#majorNameinput').val($idMajor.children(":selected").text());
+
+                                                    $('#majorNametext').val($idMajor.val());
+
+                                                }
+
+
+                                            }
+
+                                            function addmajor() {
+
+                                                $('#majorNameinput').val($('#majorName').val());
+
+                                                $('#majorNametext').val(0);
+
+
+                                            }
+
+
+                                        </script>
+
+                                        <input th:if="${PassgpaMajors.size()!=0}" hidden id="majorNameinput"
+                                               th:value="${PassgpaMajors[0].majorName}">
+
+                                        <input th:if="${PassgpaMajors.size()!=0}" hidden id="majorNametext"
+                                               th:value="${PassgpaMajors[0].idMajor}">
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Class<span
+                                                class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="addclassname">
+                                            <select class="form-control" id="idclassname" onchange="classselect()">
+                                                <option value="1"
+                                                        th:each="PassgpaClass: ${PassgpaClasss}"
+                                                        th:value="${PassgpaClass.idClass}"
+                                                        th:text="${PassgpaClass.className}">鞋，箱包，配件配饰
+                                                </option>
+                                                <option value="-1">Others</option>
+
+                                            </select>
+                                        </div>
+
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="addclassnames" hidden>
+
+                                            <input type="text" class="form-control col-md-7 col-xs-12"
+                                                   id="className" onkeyup="addclass()">
+                                        </div>
+
+                                        <script>
+
+
+                                            function classselect() {
+
+                                                var $idclassname = $('#idclassname');
+
+
+                                                if ($idclassname.val() === "-1") {
+
+
+                                                    $('#addclassnames').show();
+
+                                                    $('#addclassname').hide();
+
+                                                    $('#addprofessorNames').show();
+
+                                                    $('#addprofessorName').hide();
+
+
+                                                    $('#classNameinput').val("No Name Found");
+
+                                                    $('#classNametext').val(0);
+
+                                                    $('#professorNameinput').val("No Name Found");
+
+                                                    $('#professorNametext').val(0);
+
+
+                                                } else {
+                                                    $('#classNameinput').val($idclassname.children(":selected").text());
+
+                                                    $('#classNametext').val($idclassname.val());
+
+                                                }
+
+
+                                            }
+
+
+                                            function addclass() {
+
+                                                $('#classNameinput').val($('#className').val());
+
+                                                $('#classNametext').val(0);
+
+                                            }
+
+                                        </script>
+
+
+                                        <input th:if="${PassgpaClasss.size()!=0}" hidden id="classNameinput"
+                                               th:value="${PassgpaClasss[0].className}">
+
+                                        <input th:if="${PassgpaClasss.size()!=0}" hidden id="classNametext"
+                                               th:value="${PassgpaClasss[0].idClass}">
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Professor<span
+                                                class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="addprofessorName">
+                                            <select class="form-control" id="idprofessor" onchange="proselect()">
+                                                <!--<option>选择状态</option>-->
+                                                <option value="1"
+                                                        th:each="PassgpaProfessorEntity: ${PassgpaProfessorEntitys}"
+                                                        th:value="${PassgpaProfessorEntity.idProfeesorTable}"
+                                                        th:text="${PassgpaProfessorEntity.professorName}">鞋，箱包，配件配饰
+                                                </option>
+
+                                                <option value="-1">Others</option>
+
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12" id="addprofessorNames" hidden>
+
+                                            <input type="text" class="form-control col-md-7 col-xs-12"
+                                                   id="professorName" onkeyup="addpro()">
+                                        </div>
+                                        <script>
+
+                                            function proselect() {
+
+                                                var $idprofessor = $('#idprofessor');
+
+
+                                                if ($idprofessor.val() === "-1") {
+
+
+                                                    $('#addprofessorNames').show();
+
+                                                    $('#addprofessorName').hide();
+
+
+                                                    $('#professorNameinput').val("No Name Found");
+
+                                                    $('#professorNametext').val(0);
+
+
+                                                } else {
+
+
+                                                    $('#professorNameinput').val($idprofessor.children(":selected").text());
+
+                                                    $('#professorNametext').val($idprofessor.val());
+                                                }
+
+                                            }
+
+                                            function addpro() {
+
+
+                                                $('#professorNameinput').val($('#professorName').val());
+
+                                                $('#professorNametext').val(0);
+
+
+                                            }
+                                        </script>
+
+                                        <input th:if="${PassgpaProfessorEntitys.size()!=0}" hidden
+                                               id="professorNameinput"
+                                               th:value="${PassgpaProfessorEntitys[0].professorName}">
+
+                                        <input th:if="${PassgpaProfessorEntitys.size()!=0}" hidden
+                                               id="professorNametext"
+                                               th:value="${PassgpaProfessorEntitys[0].idProfeesorTable}">
+
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Details<span
+                                                class="required">*</span>
+                                        </label>
+
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                            <textarea type="text" class="form-control col-md-7 col-xs-12"
+                                                      id="details"></textarea>
+                                        </div>
+
+
+                                    </div>
+
+                                    <!--<div class="form-group " >-->
+                                    <!--<label class="control-label col-md-3 col-sm-3 col-xs-12"> Professor-->
+                                    <!--<span class="required">*</span>-->
+                                    <!--</label>-->
+                                    <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+                                    <!--<input type="text" id="idprofessor" required="required"-->
+                                    <!--class="form-control " onkeyup="test()">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Date <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" id="iddate">
+
+                                                <!--<option>选择状态</option>-->
+                                                <option value="1"
+                                                        th:each="PassgpaClassDateEntity: ${PassgpaClassDateEntitys}"
+                                                        th:value="${PassgpaClassDateEntity.idDateTable}"
+                                                        th:text="${PassgpaClassDateEntity.date}">鞋，箱包，配件配饰
+                                                </option>
+
+                                                <option value="-1">Others</option>
+
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+                            <div id="step-2">
+
+                                <form class="form-horizontal form-label-left">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price"> Price
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="number" id="price" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Promotion<span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div id="gender" class="btn-group" data-toggle="buttons"
+                                                 onchange="toggle()">
+                                                <label class="btn btn-default active" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                    <input type="radio" name="gender" value="NORMAL"> &nbsp; No &nbsp;
+                                                </label>
+                                                <label class="btn btn-primary" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                    <input type="radio" name="gender" value="SALE">&nbsp; Yes &nbsp;
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+
+                                        function toggle() {
+
+
+                                            if ($('#gender').children(".active").children("input").val() === 'NORMAL') {
+
+                                                $('#PromotionDate').attr("disabled", 'disabled');
+
+                                                $('#PromotionPrice').attr("disabled", 'disabled');
+
+
+                                            } else if ($('#gender').children(".active").children("input").val() === 'SALE') {
+
+                                                $('#PromotionDate').removeAttr("disabled");
+
+                                                $('#PromotionPrice').removeAttr("disabled");
+                                            }
+
+
+                                        }
+
+                                    </script>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Promotion Date <span
+                                                class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="PromotionDate"
+                                                   class="date-picker form-control col-md-7 col-xs-12"
+                                                   required="required" type="text" disabled="disabled" value="123">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Promotion Price <span
+                                                class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="PromotionPrice" class=" form-control col-md-7 col-xs-12"
+                                                   required="required" type="text" disabled="disabled">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <script type="text/javascript"></script>
+
+
+                            <div id="step-3">
+
+
+                                <form action="/uploadimage"
+                                      class="dropzone dz-clickable ">
+                                    <div class="dz-default dz-message"><span>Drop PDF here to upload</span></div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                        <!-- End SmartWizard Content -->
+
+
+                    </div>
+                </div>
+
+
+                <div class="custom-file-container" data-upload-id="myUniqueUploadId">
+                    <label>Upload File <a href="javascript:void(0)" class="custom-file-container__image-clear"
+                                          title="Clear Image">x</a></label>
+
+                    <label class="custom-file-container__custom-file">
+                        <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="*"
+                               multiple>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+                        <span class="custom-file-container__custom-file__custom-file-control"></span>
+                    </label>
+                    <div class="custom-file-container__image-preview"></div>
+                </div>
+
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Describle</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <div class="bs-example" data-example-id="simple-jumbotron">
+                            <div class="jumbotron">
+                                <!--<h1>Hello, world!</h1>-->
+                                <p>Yor notes will be extremelly helpful. Thanks for choosing our platform to sell your
+                                    notes.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /page content -->
+
+
+</div>
+</body>
+</html>
+<script>
+    //    var PNotify = require("pnotify");
+
+    //    function test() {
+    //
+    //        console.log($('#idprofessor').val())
+    //
+    //    }
+
+    var picname = [];
+
+
+    var myDropzone = new Dropzone(".dropzone");
+
+    $(function () {
+        myDropzone.on("success", function (file, response) {
+            $("span[data-dz-name]").last().val(response.name);
+//            alert($("span[data-dz-name]").last().val());
+//            console.log(response.name);
+            picname.push(response.name);
+            console.log(picname);
+
+
+        });
+    });
+
+
+    $(document).ready(function () {
+
+
+        //  Wizard 2
+        $('#wizard2').smartWizard({transitionEffect: 'slide', onFinish: onFinishCallback});
+
+        function onFinishCallback() {
+
+            var $PromotionDate = $('#PromotionDate');
+
+            var pic = [];
+
+
+            $('span[data-dz-name]').each(function (index) {
+
+                pic.push($(this).text());
+
+            });
+
+            var $PromotionPrice = $('#PromotionPrice');
+
+            var val = $('#price').val();
+
+
+            jQuery.ajax({
+
+                url: "/admin/postnote?" + jQuery.param({
+                    "iduni": $('#universitynametext').val(),
+                    "universityname": $('#universitynameinput').val(),
+
+
+                    "idMajor": $('#majorNametext').val(),
+                    "majorName": $('#majorNameinput').val(),
+
+                    "idClass": $('#classNametext').val(),
+                    "className": $('#classNameinput').val(),
+
+                    "idProfeesorTable": $('#professorNametext').val(),
+                    "professorName": $('#professorNameinput').val(),
+
+                    "idDateTable": $('#iddate').val(),
+
+
+                    "price": (val === "" ? '0' : val),
+                    "isSale": $('#gender').children(".active").children("input").val(),
+                    "salePrice": ($PromotionPrice.val() === '' ? '0' : $PromotionPrice.val()),
+//                    "saleFrom":"2017-10-11 14:47:18"
+                    "saleFrom": $PromotionDate.data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm:ss'),
+                    "saleTo": $PromotionDate.data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm:ss'),
+
+                    "noteName": pic.toString(),
+                    "notePath": picname.toString(),
+                    "details": $('#details').val(),
+
+
+                }),
+                type: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                    console.log(data);
+
+                    window.location.href = data.redirect;
+
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+
+                    console.log("HTTP Request Failed");
+                    new PNotify({
+                        title: 'Oh No!',
+                        text: 'HTTP Request Failed',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    })
+
+                })
+                .always(function () {
+                    /* ... */
+                });
+
+
+        }
+
+        $('.buttonNext').addClass('btn btn-primary');
+        $('.buttonPrevious').addClass('btn btn-default');
+        $('.buttonFinish').addClass('btn btn-success');
+    });
+
+
+    function postUni() {
+
+        var val = $('#universityname').val();
+
+        if (val !== "") {
+            jQuery.ajax({
+                url: "/admin/addUni?" + jQuery.param({
+                    "universityname": val,
+                }),
+                type: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("HTTP Request Succeeded: " + jqXHR.status);
+                    console.log(data);
+
+                    $('#adduniversityname').hide();
+                    $('#idUniversity').append($('<option>', {
+                        value: data.iduni,
+                        text: data.universityname
+                    })).val(data.iduni);
+                    $('#adduniversitynames').show();
+
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                new PNotify({
+                    title: 'Oh No!',
+                    text: 'HTTP Request Failed',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+            })
+                .always(function () {
+                    /* ... */
+                });
+        } else {
+
+            new PNotify({
+                title: 'Oh No!',
+                text: 'There must be some inputs.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+        }
+
+
+    }
+
+
+    $('#PromotionDate').daterangepicker({
+//        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+            format: 'MM/DD/YYYY HH:mm'
+        }
+    });
+
+
+</script>
+
+
+<script src="https://unpkg.com/file-upload-with-preview"></script>
+<script>
+    var upload = new FileUploadWithPreview('myUniqueUploadId')
+</script>
+
+
